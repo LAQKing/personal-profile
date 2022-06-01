@@ -17,7 +17,7 @@ npm run build
 ```
 
 ### 在线示例
-[在线预览](https://passerbyq.github.io/personal/dist/#/)
+[在线预览](https://laqtxy.gitee.io/personal-profile/#/)
 
 ### 图片预览
 ![首页](https://gitee.com/laqtxy/applet-picture/raw/c1fd40b0fdd835f1f028ee4bb40728cfd29bfe30/laqGamePic/personal/1654079700352.jpg)
