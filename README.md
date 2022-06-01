@@ -20,7 +20,7 @@ npm run build
 [在线预览](https://passerbyq.github.io/personal/dist/#/)
 
 ### 图片预览
-![首页](https://img-blog.csdnimg.cn/20210605153018936.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyNjQ0OTg3,size_16,color_FFFFFF,t_70)
-![首页](https://img-blog.csdnimg.cn/20210605153051159.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyNjQ0OTg3,size_16,color_FFFFFF,t_70)
-![技术页面](https://img-blog.csdnimg.cn/20210605153138943.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyNjQ0OTg3,size_16,color_FFFFFF,t_70)
+![首页](https://gitee.com/laqtxy/applet-picture/raw/c1fd40b0fdd835f1f028ee4bb40728cfd29bfe30/laqGamePic/personal/1654079700352.jpg)
+
+![个人简介](https://gitee.com/laqtxy/applet-picture/raw/c1fd40b0fdd835f1f028ee4bb40728cfd29bfe30/laqGamePic/personal/1654079700370.jpg)
 
