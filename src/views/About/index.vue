@@ -24,12 +24,7 @@
       </div>
     </div>
     <!-- 专业技能 -->
-    <top-tool
-      :show-tag="true"
-      :show-more="false"
-      title="专业技能"
-      @more="more"
-    />
+    <top-tool :show-tag="true" :show-more="false" title="专业技能" @more="more" />
     <div class="major-container">
       <div v-for="item in majorList" :key="item.title" class="major-item">
         <div class="title">{{ item.title }}:</div>
@@ -40,12 +35,7 @@
       </div>
     </div>
     <!-- 工作经历 -->
-    <top-tool
-      :show-tag="true"
-      :show-more="false"
-      title="工作经历"
-      @more="more"
-    />
+    <top-tool :show-tag="true" :show-more="false" title="工作经历" @more="more" />
     <div v-for="item in dataList" :key="item.name" class="job-container">
       <div class="tech-item">
         <div class="logo"><img :src="require('@/assets/logo.png')" alt=""></div>
@@ -61,12 +51,7 @@
         <img src="@/assets/arrow_active.png">
       </div>
       <div class="project-container">
-        <div
-          v-for="project in item.projects"
-          :key="project.title"
-          class="case-item"
-          @click="showDetail(project)"
-        >
+        <div v-for="project in item.projects" :key="project.title" class="case-item" @click="showDetail(project)">
           <div class="desc">
             {{ project.introduce }}
           </div>
