@@ -1,4 +1,4 @@
-# personal：基于Vue3 + TypeScript开发的个人博客
+# 基于Vue3 + TypeScript开发的个人网站，主要展示个人技术作品、对技术的理解以及个人简历
 
 
 ## 安装依赖包
