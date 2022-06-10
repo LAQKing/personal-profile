@@ -1,4 +1,5 @@
-html,body {
+html,
+body {
   height: 100%;
   -webkit-tap-highlight-color: transparent;
   -moz-osx-font-smoothing: grayscale;
@@ -6,20 +7,38 @@ html,body {
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
   overflow-x: hidden;
-  overflow-y: scroll;
   box-sizing: border-box;
   font-size: 14px;
   margin: 0 auto;
+  padding: 0;
+  color: #2c3e50;
 }
-/* div::-webkit-scrollbar{width:1px;height:auto;background:none;} */
-/* div::-webkit-scrollbar-thumb{width:1px;border-radius:3px;background:#d8d8d8;} */
+
+body::-webkit-scrollbar {
+  width: 5px;
+  height: auto;
+  background: #fff;
+}
+
+body::-webkit-scrollbar-thumb {
+  width: 5px;
+  border-radius: 5px;
+  background: #4dacfa;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
 #app {
   min-height: 100%;
   background: #f0f0f4;
 }
-*{
+
+* {
   box-sizing: border-box;
 }
+
 *,
 *:before,
 *:after {
@@ -65,12 +84,21 @@ a:hover {
 div:focus {
   outline: none;
 }
-.w1200{
+
+.w1200 {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 @media screen and (max-width: 1200px) {
-  .w1200{
+  .w1200 {
     padding: 0 3%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body::-webkit-scrollbar,
+  body::-webkit-scrollbar-thumb{
+    display: none;
   }
 }

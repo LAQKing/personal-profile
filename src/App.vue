@@ -1,25 +1,31 @@
 <template>
-  <div>
+  <div class="app" :class="menuOpen?'menuOpen':''">
     <top-nav-bar />
+    <breadcrumb />
     <div class="main">
       <router-view v-slot="{ Component }">
-        <keep-alive :include="includeList">
-          <component :is="Component" />
-        </keep-alive>
+        <transition name="fade-transform" mode="out-in">
+          <keep-alive :include="includeList">
+            <component :is="Component" />
+          </keep-alive>
+        </transition>
       </router-view>
     </div>
     <bottom-bar style="margin-top: 50px" @click="moreInfo" />
   </div>
 </template>
 <script lang="ts">
-import { onMounted, reactive, watch, toRefs } from '@vue/runtime-core'
-import TopNavBar from '@/components/TopNavBar.vue' // @ is an alias to /src
-import BottomBar from '@/components/BottomBar/index.vue' // @ is an alias to /src
+import { onMounted, reactive, watch, toRefs, computed } from '@vue/runtime-core'
+import TopNavBar from '@/components/TopNavBar.vue' // 菜单栏 menu
+import BottomBar from '@/components/bottom.vue' // 底部信息 bottom
+import breadcrumb from '@/components/breadcrumb.vue' // 面包屑 breadcrumb
 import { useRoute, useRouter } from 'vue-router'
+import store from '@/store'
 export default {
   components: {
     TopNavBar,
-    BottomBar
+    BottomBar,
+    breadcrumb
   },
 
   setup() {
@@ -34,9 +40,18 @@ export default {
         if (newVal.meta.keepAlive && state.includeList.indexOf(newVal.name) === -1) {
           state.includeList.push(newVal.name)
         }
+        setTimeout(() => {
+          document.body.scrollTop = 0
+          document.documentElement.scrollTop = 0
+        }, 300)
       },
       { deep: true }
     ) // 开启深度监听
+    // 菜单状态
+    const menuOpen = computed(() => {
+      return store.state.menuOpen
+    })
+
     onMounted(() => {})
 
     const moreInfo = () => {
@@ -47,38 +62,53 @@ export default {
     return {
       ...toRefs(state),
       route,
-      moreInfo
+      moreInfo,
+      menuOpen
     }
   }
 }
 </script>
 <style lang="scss">
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #4dacfa;
-    }
+.app{
+  padding-left: 150px;
+  padding-top: 50px;
+  transition: 0.3s;
+  &.menuOpen{
+    padding-left: 0;
   }
 }
 .main{
   min-height: 63.85vh;
+  position: relative;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.28s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all .5s;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+@media screen and (max-width:768px) {
+.app{
+  padding-top: 0;
+  padding-left: 0;
+}
 }
 </style>

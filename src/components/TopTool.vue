@@ -10,42 +10,42 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-// import { onMounted } from 'vue'
-export default {
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    showTag: {
-      type: Boolean,
-      default: false
-    },
-    showMore: {
-      type: Boolean,
-      default: true
-    }
+<script lang="ts" setup>
+import { defineProps, defineEmits, computed } from 'vue'
+const props = defineProps({
+  title: {
+    type: String,
+    default: ''
   },
-  setup(prop: any, context: any) {
-    /** ***************  数据声明  ***************/
-
-    /** ***************  生命周期  ***************/
-
-    // onMounted(() => {});
-
-    /** ***************  自定义方法  ***************/
-    const more = () => {
-      context.emit('more')
-    }
-
-    /** ***************  网络请求  ***************/
-
-    return {
-      more
-    }
+  showTag: {
+    type: Boolean,
+    default: false
+  },
+  showMore: {
+    type: Boolean,
+    default: true
   }
+})
+/**
+ * 计算属性
+ */
+const title = computed(() => {
+  return props.title
+})
+const showTag = computed(() => {
+  return props.showTag
+})
+const showMore = computed(() => {
+  return props.showMore
+})
+/**
+ * 抛出事件，给父组件调用
+ */
+const emit = defineEmits(['more'])
+const more = () => {
+  emit('more')
 }
+
 </script>
 <style lang="scss" scoped>
 .top-tool {

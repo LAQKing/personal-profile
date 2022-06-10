@@ -1,8 +1,14 @@
-import { createStore } from "vuex";
+import { createStore } from 'vuex'
 
 export default createStore({
-  state: {},
-  mutations: {},
+  state: {
+    menuOpen: false
+  },
+  mutations: {
+    menuOpen(state, payload) {
+      state.menuOpen = payload.menuOpen
+    }
+  },
   actions: {},
-  modules: {},
-});
+  modules: {}
+})

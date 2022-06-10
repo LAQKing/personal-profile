@@ -10,65 +10,55 @@
         <div>学海无涯苦作舟</div>
       </div>
     </div>
-    <case class="case-container w1200" :data="caseList" @more="moreCase" />
+    <Case class="case-container w1200" :data="caseList" @more="moreCase" />
     <Technology class="case-container w1200" :data="technologys" @more="moreTech" />
   </div>
+
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { onMounted, reactive, toRefs } from 'vue'
-import Case from './components/Case.vue' // @ is an alias to /src
-import Technology from './components/Technology.vue' // @ is an alias to /src
+import Case from './components/project.vue'
+import Technology from './components/Technology.vue'
 import { useRouter } from 'vue-router'
 import { getCase, getTechnologys } from '@/api/services'
-
-export default {
-  name: 'Home',
-  components: { Case, Technology },
-  setup() {
-    const router = useRouter()
-    const state = reactive<any>({
-      caseList: [],
-      technologys: []
-    })
-
-    // 案例
-    const cases = () => {
-      getCase().then((res:any) => {
-        state.caseList = res.data.result.slice(0, 3)
-      })
-    }
-
-    // 技术
-    const techs = () => {
-      getTechnologys().then((res:any) => {
-        state.technologys = res.data.result.slice(0, 3)
-      })
-    }
-    onMounted(() => {
-      cases()
-      techs()
-    })
-
-    const moreCase = () => {
-      window.scrollTo(0, 0)
-      router.push('case')
-    }
-
-    const moreTech = () => {
-      window.scrollTo(0, 0)
-      router.push('technology')
-    }
-
-    return {
-      ...toRefs(state),
-      cases,
-      techs,
-      moreCase,
-      moreTech
-    }
-  }
+const router = useRouter()
+/** 数据 */
+const state = reactive<any>({
+  caseList: [],
+  technologys: []
+})
+// 案例
+const cases = () => {
+  getCase().then((res:any) => {
+    state.caseList = res.data.result.slice(0, 3)
+  })
 }
+
+// 技术
+const techs = () => {
+  getTechnologys().then((res:any) => {
+    state.technologys = res.data.result.slice(0, 3)
+  })
+}
+onMounted(() => {
+  cases()
+  techs()
+})
+
+const moreCase = () => {
+  window.scrollTo(0, 0)
+  router.push('project')
+}
+
+const moreTech = () => {
+  window.scrollTo(0, 0)
+  router.push('technology')
+}
+const {
+  caseList,
+  technologys
+} = toRefs(state)
 </script>
 <style lang="scss" scoped>
 .top {

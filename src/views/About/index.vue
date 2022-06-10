@@ -8,17 +8,14 @@
         <div class="contact">
           <span>联系方式：</span>
           <a style="margin-right: 20px" href="tencent://message/?uin=1563058139&Site=qq&Menu=yes"><img src="@/assets/QQ.png"></a>
-          <el-popover placement="bottom" :width="200" trigger="hover">
-            <template #reference>
-              <img src="@/assets/wechat.png" @click="showWechat">
+          <a-popover position="bottom" :width="200" trigger="hover">
+            <img src="@/assets/wechat.png" @click="showWechat">
+            <template #content>
+              <div class="img">
+                <img width="150" src="@/assets/wechat_code.png">
+              </div>
             </template>
-            <div style="text-align: center">
-              <img
-                style="width: 150px; height: 150px"
-                src="@/assets/wechat_code.png"
-              >
-            </div>
-          </el-popover>
+          </a-popover>
         </div>
         <span>联系邮箱：1563058139@qq.com</span>
       </div>
@@ -243,6 +240,9 @@ export default {
   height: 40px;
   border-radius: 40px;
   background: #4dacfa;
+  .img{
+    text-align: center;
+  }
   img {
     width: 20px;
     height: 20px;

@@ -1,77 +1,152 @@
 <template>
-  <div class="nav-bar">
-    <div class="w1200 navBox">
+  <div class="nav-bar" :class="[{'open':isOpen},{'pcHide':menuOpen}]">
+    <div class="wapMenu" :class="isOpen?'open':''" @click="openMenu">
+      <div class="wap" />
+    </div>
+    <div class="navBox">
       <div class="title">
         <span class="title-item">技</span>
         <span class="title-item">术</span>
       </div>
       <div class="menu">
-        <div v-for="(menu, index) in menuList" :key="menu" class="menu-item" :class="{ active: activeIndex === index }" @click="changeIndex(index)">
-          {{ menu }}
+        <div
+          v-for="(item, index) in menuList"
+          :key="index"
+          class="menu-item"
+          :class="{ active: activeIndex === item.meta.index || routeID === item.meta.index }"
+          @click="changeIndex(item.meta.index,item.path)"
+        >
+          {{ item.meta.menuName }}
         </div>
       </div>
     </div>
   </div>
 </template>
-<script lang="ts">
-import { onMounted, reactive, ref, watch } from 'vue'
+<script lang="ts" setup>
+import { onMounted, reactive, toRefs, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-export default {
-  setup() {
-    /** ***************  数据声明  ***************/
-    const router = useRouter()
-    const route = useRoute()
-    const menuList = reactive(['首页', '案例', '技术', '关于'])
-    const activeIndex = ref(0)
-    const routeList = ['/', '/case', '/technology', '/about']
+import store from '@/store'
 
-    /** ***************  生命周期  ***************/
-    watch(
-      () => route.path,
-      () => {
-        const path = route.path
-        const index = routeList.indexOf(path)
-        if (index === -1) {
-          // router.replace("/");
-          activeIndex.value = -1
-        } else {
-          activeIndex.value = index
-        }
-      }
-    )
+/** ***************  数据声明  ***************/
+const router = useRouter()
+const route = useRoute()
+const state = reactive<any>({
+  menuList: [],
+  activeIndex: 0,
+  isOpen: false
+})
 
-    /** ***************  自定义方法  ***************/
-    const changeIndex = (index: number) => {
-      activeIndex.value = index
-      const path = routeList[index]
-      router.replace(path)
-    }
-
-    /** ***************  网络请求  ***************/
-
-    return {
-      menuList,
-      activeIndex,
-      changeIndex
-    }
+const routerList = router.options.routes
+routerList.forEach((item) => {
+  if (item.meta && item.meta.showTop) {
+    state.menuList.push(item)
   }
+})
+// 菜单状态
+const menuOpen = computed(() => {
+  return store.state.menuOpen
+})
+// 监听路由id
+const routeID = computed(() => {
+  const idx = state.menuList.findIndex((item) => item.path === route.fullPath)
+  let active:any = 0
+  if (idx !== -1) {
+    state.activeIndex = route.meta.index
+    active = route.meta.index
+  }
+  return active
+})
+
+/** 选中菜单 **/
+const changeIndex = (index: number, path: string) => {
+  state.activeIndex = index
+  router.push(path)
 }
+// 移动端打开菜单
+const openMenu = () => {
+  state.isOpen = !state.isOpen
+}
+
+/* 获取路由信息 */
+const getRoute = () => {
+  const avtiveTow:any = JSON.parse(sessionStorage.getItem('route') || '')
+  const index = route.meta?.index || avtiveTow?.meta?.index
+  state.activeIndex = index
+}
+
+onMounted(() => {
+  getRoute()
+})
+const {
+  menuList,
+  activeIndex,
+  isOpen
+} = toRefs(state)
+
 </script>
 <style lang="scss" scoped>
-body {
-  margin: 0;
-  padding: 0;
+.wapMenu {
+  position: fixed;
+  left: 20px;
+  top: 30px;
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  display: none;
+}
+.wap {
+  position: relative;
+  background: #4dacfa;
+  height: 2px;
+  transition: 0.3s;
+}
+.wap::after,
+.wap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #4dacfa;
+  transition: 0.3s;
+}
+.wap::after {
+  top: -10px;
+}
+.wap::before {
+  top: 10px;
+}
+.wapMenu.open .wap {
+  background: none;
+}
+.wapMenu.open .wap::after {
+  transform: rotate(45deg);
+  top: 0;
+}
+.wapMenu.open .wap::before {
+  transform: rotate(-45deg);
+  top: 0;
 }
 .nav-bar {
   background: #111111;
   color: white;
-  .navBox {
-    height: 100px;
-    display: flex;
-    align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 99;
+  padding: 30px 0;
+  text-align: center;
+  transition: 0.3s;
+  &.pcHide{
+    left: -150px;
   }
   .title {
     display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
   }
   .title-item {
     display: block;
@@ -84,16 +159,9 @@ body {
   }
   .menu {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     .menu-item {
       font-size: 14px;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 20px;
-      border-radius: 15px;
-      margin: 0 5px;
+      padding: 20px;
     }
 
     .active {
@@ -102,6 +170,18 @@ body {
 
     .menu-item:hover {
       cursor: pointer;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .wapMenu {
+    display: block;
+  }
+  .nav-bar {
+    padding-top: 80px;
+    left: -100%;
+    &.open {
+      left: 0;
     }
   }
 }

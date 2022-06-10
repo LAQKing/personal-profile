@@ -13,44 +13,40 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { onMounted, reactive } from 'vue'
-export default {
-  setup() {
-    const userInfo = reactive({
-      name: '技术',
-      desc: '四年前端开发经验，专注前端技术',
-      links: [
-        {
-          logo: require('@/assets/csdn.png'),
-          link: 'https://blog.csdn.net/qq_38332693'
-        },
-        {
-          logo: require('@/assets/gitee.png'),
-          link: 'https://gitee.com/laqtxy'
-        }
-      ]
-    })
 
-    /** ***************  生命周期  ***************/
-
-    onMounted(() => {})
-
-    /** ***************  自定义方法  ***************/
-    const hrefClick = (url: string) => {
-      window.open(url)
+const userInfo = reactive({
+  name: '技术',
+  desc: '四年前端开发经验，专注前端技术',
+  links: [
+    {
+      logo: require('@/assets/csdn.png'),
+      link: 'https://blog.csdn.net/qq_38332693'
+    },
+    {
+      logo: require('@/assets/gitee.png'),
+      link: 'https://gitee.com/laqtxy'
     }
+  ]
+})
 
-    return { userInfo, hrefClick }
-  }
+/** ***************  生命周期  ***************/
+
+onMounted(() => {})
+
+/** ***************  自定义方法  ***************/
+const hrefClick = (url: string) => {
+  window.open(url)
 }
+
 </script>
 <style lang="scss" scoped>
 .info-container {
   height: 200px;
   background: #4dacfa;
   color: white;
-
+  text-align: center;
   .avatar {
     padding: 20px;
     img {

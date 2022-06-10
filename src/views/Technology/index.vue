@@ -1,7 +1,7 @@
 <template>
   <div class="tech-container w1200">
     <div
-      v-for="item in technologys"
+      v-for="item in (homeTech.length?homeTech:technologys)"
       :key="item.title"
       class="tech-item"
       @click="showDetail(item)"
@@ -16,58 +16,74 @@
         <img src="@/assets/arrow_normal.png">
       </div>
     </div>
+    <loading :dot="true" :title="'加载中'" :loading="load" />
   </div>
 </template>
-<script lang="ts">
-import { onMounted, reactive, toRefs } from 'vue'
+<script lang="ts" setup>
+import { onMounted, reactive, toRefs, defineProps, computed } from 'vue'
 import { getTechnologys } from '@/api/services'
-
-export default {
-  setup() {
-    const state = reactive<any>({
-      technologys: []
-    })
-    const getIcon = (icon: string) => {
-      if (icon) {
-        return icon
-      }
-      return require('@/assets/logo.png')
-    }
-    // 请求数据
-    const techs = () => {
-      getTechnologys().then((res:any) => {
-        state.technologys = res.data.result
-      })
-    }
-    // 详情
-    const showDetail = (item: any) => {
-      item.url && window.open(item.url)
-    }
-    onMounted(() => {
-      techs()
-    })
-    return {
-      ...toRefs(state),
-      getIcon,
-      showDetail
+import loading from '@/components/loading.vue'
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => {
+      return []
     }
   }
+})
+// 首页数据
+const homeTech = computed(() => {
+  return props.data
+})
+
+const state = reactive<any>({
+  load: false,
+  technologys: []
+})
+
+// 请求数据
+const techs = () => {
+  state.load = true
+  getTechnologys().then((res:any) => {
+    state.load = false
+    state.technologys = res.data.result
+  })
 }
+
+const getIcon = (icon: string) => {
+  if (icon) {
+    return icon
+  }
+  return require('@/assets/logo.png')
+}
+
+// 详情
+const showDetail = (item: any) => {
+  item.url && window.open(item.url)
+}
+
+onMounted(() => {
+  techs()
+})
+
+const { technologys, load } = toRefs(state)
+
 </script>
 <style lang="scss" scoped>
 .tech-container {
-  padding-top: 50px;
+  position: relative;
+  padding-top: 30px;
 }
 .tech-item {
+  box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: #f7f7f7;
   padding: 10px 20px;
   margin-bottom: 20px;
-
+  transition: .3s;
   position: relative;
-
   .icon {
     width: 200px;
     height: 150px;
@@ -121,8 +137,6 @@ export default {
 .tech-item:hover {
   cursor: pointer;
   background: #4dacfa;
-  box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.12);
-  transition: all 1s;
   .more {
     border-radius: 40px;
     background: white;

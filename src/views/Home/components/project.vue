@@ -1,14 +1,15 @@
 <template>
   <div>
-    <top-tool title="技术" @more="more" />
-    <Technology :data="data" />
+    <TopTool title="案例" @more="more" />
+    <case-box :data="data" />
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits } from 'vue'
+import caseBox from '../../project/index.vue'
 import TopTool from '@/components/TopTool.vue'
-import Technology from '../../Technology/index.vue'
 
+// 添加默认值
 const props = defineProps({
   data: {
     type: Array,
@@ -21,10 +22,6 @@ const props = defineProps({
 const emit = defineEmits(['more'])
 const more = () => {
   emit('more')
-}
-// 详情
-const showDetail = (item: any) => {
-  item.url && window.open(item.url)
 }
 
 </script>
