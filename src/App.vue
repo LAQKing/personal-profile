@@ -78,7 +78,7 @@ export default {
   }
 }
 .main{
-  min-height: 63.85vh;
+  min-height: calc(100vh - 300px);
   position: relative;
 }
 .fade-enter-active,

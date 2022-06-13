@@ -9,7 +9,7 @@
           <span>联系方式：</span>
           <a style="margin-right: 20px" href="tencent://message/?uin=1563058139&Site=qq&Menu=yes"><img src="@/assets/QQ.png"></a>
           <a-popover position="bottom" :width="200" trigger="hover">
-            <img src="@/assets/wechat.png" @click="showWechat">
+            <img src="@/assets/wechat.png">
             <template #content>
               <div class="img">
                 <img width="150" src="@/assets/wechat_code.png">
@@ -33,29 +33,21 @@
     </div>
     <!-- 工作经历 -->
     <top-tool :show-tag="true" :show-more="false" title="工作经历" @more="more" />
-    <div v-for="item in dataList" :key="item.name" class="job-container">
+    <div v-for="(item,index) in dataList" :key="item.name" class="job-container">
       <div class="tech-item">
-        <div class="logo"><img :src="require('@/assets/logo.png')" alt=""></div>
-        <div class="company">{{ item.name }}</div>
-        <div class="more">
-          <div>
-            <div class="station time">{{ item.station }}</div>
-            <div class="time">{{ item.date }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="arrow-container">
-        <img src="@/assets/arrow_active.png">
+        <div class="company">{{ index+1 }}、 {{ item.name }}</div>
+        <div class="company">{{ item.station }}</div>
+        <div class="company">{{ item.date }}</div>
       </div>
       <div class="project-container">
-        <div v-for="project in item.projects" :key="project.title" class="case-item" @click="showDetail(project)">
+        <div v-for="project in item.projects" :key="project" class="case-item" @click="showDetail(project)">
           <div class="desc">
-            {{ project.introduce }}
+            {{ showVal(project,'introduce') }}
           </div>
           <div class="info">
-            <div>
-              <div class="title">{{ project.title }}</div>
-              <div class="type" style="font-size: 12px">{{ project.type }}</div>
+            <div class="txtBox">
+              <div class="title">{{ showVal(project,'title') }}</div>
+              <div class="type">{{ showVal(project,'type') }}</div>
             </div>
             <div class="arrow-container">
               <img src="@/assets/arrow_active.png">
@@ -66,54 +58,49 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { onMounted, reactive, toRefs } from 'vue'
-import TopTool from '@/components/TopTool.vue' // @ is an alias to /src
+<script lang="ts" setup>
+import { onMounted, reactive, toRefs, defineEmits } from 'vue'
+import TopTool from '@/components/TopTool.vue'
 import { useRouter } from 'vue-router'
-import { getUserInfo } from '@/api/services'
-
-export default {
-  components: {
-    TopTool
-  },
-  setup(prop: any, context: any) {
-    /** ***************  数据声明  ***************/
-    const router = useRouter()
-    const state = reactive<any>({
-      dataList: [],
-      majorList: []
-    })
-    const more = () => {
-      context.emit('more')
-    }
-    // 请求数据
-    const getData = () => {
-      getUserInfo().then((res:any) => {
-        state.dataList = res.data.dataList
-        state.majorList = res.data.majorList
-      })
-    }
-    /** ***************  自定义方法  ***************/
-    const showDetail = (item: any) => {
-      window.scrollTo(0, 0)
-      const id = item.icon
-      router.push({
-        name: 'CaseDetail',
-        params: {
-          id: id
-        }
-      })
-    }
-    onMounted(() => {
-      getData()
-    })
-    return {
-      ...toRefs(state),
-      showDetail,
-      more
-    }
-  }
+import { getUserInfo, getProject } from '@/api/services'
+/** ***************  数据声明  ***************/
+const router = useRouter()
+const state = reactive<any>({
+  dataList: [],
+  majorList: [],
+  data: []
+})
+const emit = defineEmits(['more'])
+const more = () => {
+  emit('more')
 }
+/** 请求数据*/
+const getData = async() => {
+  await getUserInfo().then((res:any) => {
+    state.dataList = res.data.dataList
+    state.majorList = res.data.majorList
+  })
+  getProject().then((res:any) => {
+    state.data = res.data.result
+  })
+}
+const showVal = (id, name) => {
+  const idx = state.data.findIndex((item) => item.id === id)
+  let value = ''
+  if (idx !== -1) {
+    value = state.data[idx][name]
+  }
+  return value
+}
+/** ***************  自定义方法  ***************/
+const showDetail = (id:any) => {
+  router.push({ path: 'projectDetail', query: { id: id }})
+}
+onMounted(() => {
+  getData()
+})
+
+const { dataList, majorList } = toRefs(state)
 </script>
 <style lang="scss" scoped>
 .about-container {
@@ -183,27 +170,12 @@ export default {
 }
 
 .job-container {
-  display: flex;
-  align-items: center;
-  margin-top: 40px;
+  margin-top: 50px;
 }
-
 .tech-item {
-  width: 240px;
-  height: 300px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid rgba(233, 233, 233, 100);
-  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.12);
-  .logo {
-    margin: 20px;
-    img {
-      width: 60px;
-      height: 60px;
-      border-radius: 5px;
-    }
-  }
+  color: #4dacfa;
+  margin-bottom: 20px;
   .title {
     padding: 20px 10px;
   }
@@ -211,26 +183,6 @@ export default {
     padding: 0 20px;
     font-size: 20px;
     font-weight: bold;
-  }
-
-  .more {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    height: 80px;
-    background: #e9e9e9;
-
-    .time {
-      font-size: 15px;
-      color: #4dacfa;
-      text-align: left;
-    }
-
-    .station {
-      font-size: 20px;
-      font-weight: bold;
-    }
   }
 }
 
@@ -240,6 +192,7 @@ export default {
   height: 40px;
   border-radius: 40px;
   background: #4dacfa;
+  text-align: center;
   .img{
     text-align: center;
   }
@@ -249,11 +202,15 @@ export default {
     transform: translateY(50%);
   }
 }
-
+.info{
+.arrow-container {
+  text-align: left;
+}
+}
 .project-container {
   display: flex;
   align-items: center;
-
+  padding-left: 55px;
   .case-item {
     width: 200px;
     height: 240px;
@@ -266,40 +223,44 @@ export default {
       margin: 10px;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 5;
+      -webkit-line-clamp: 6;
       overflow: hidden;
-    color: white;
+      color: white;
+      line-height: 1.5;
+      letter-spacing: 2px;
     }
     .info {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
-      height: 40px;
       background: white;
       text-align: left;
       padding: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-
+      .txtBox{
+        width: calc(100% - 30px);
+      }
       .title {
         font-size: 15px;
         font-weight: bold;
+        margin-bottom: 5px;
       }
-
       .type {
         font-size: 12px;
       }
-
       .arrow-container {
-        width: 20px;
-        height: 20px;
+        margin: 0 ;
+        width: 30px;
+        height: 30px;
+        line-height: 25px;
         border-radius: 20px;
         background: #4dacfa;
         img {
-          width: 10px;
-          height: 10px;
+          width: 15px;
+          height: 15px;
           transform: translate(50%, 0);
         }
       }

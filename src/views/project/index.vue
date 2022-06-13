@@ -1,7 +1,7 @@
 <template>
   <div class="container w1200">
     <div v-for="item in (homeCases.length?homeCases:cases)" :key="item.title" class="case-item" @click="showDetail(item)">
-      <div class="bg-icon" />
+      <div class="bg-icon" :style="'background-color:'+item.bgColor" />
       <img :src="getIcon(item.icon)" alt="" class="img">
       <div class="info">
         <div class="txt">
@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, defineProps, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { getCase } from '@/api/services'
+import { getProject } from '@/api/services'
 import loading from '@/components/loading.vue'
 const props = defineProps({
   data: {
@@ -37,7 +37,7 @@ const state = reactive<any>({
 // 请求数据
 const getData = () => {
   state.load = true
-  getCase().then((res:any) => {
+  getProject().then((res:any) => {
     state.load = false
     state.cases = res.data.result
   })
@@ -68,7 +68,6 @@ const { cases, load } = toRefs(state)
 </script>
 <style lang="scss" scoped>
 .container {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   //   justify-content: space-between;
@@ -83,12 +82,13 @@ const { cases, load } = toRefs(state)
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.12);
+    &:nth-child(2){
+      background: #000;
+    }
     .img{
       position: absolute;
       left: 50%;
       top: 50%;
-      min-width: 60%;
-      max-height: 100%;
       transform: translate(-50%,-50%);
     }
     &:nth-child(3n){
@@ -99,7 +99,7 @@ const { cases, load } = toRefs(state)
       left: 0;
       right: 0;
       top: 0;
-      height: 180px;
+      height: 100%;
     }
     .info {
       position: absolute;

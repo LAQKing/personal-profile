@@ -106,6 +106,7 @@ const { technologys, load } = toRefs(state)
     .title {
       font-size: 20px;
       color: #111111;
+      margin-bottom: 10px;
     }
 
     .desc {

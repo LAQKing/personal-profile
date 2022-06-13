@@ -10,7 +10,7 @@
         <div>学海无涯苦作舟</div>
       </div>
     </div>
-    <Case class="case-container w1200" :data="caseList" @more="moreCase" />
+    <Project class="case-container w1200" :data="projectList" @more="moreCase" />
     <Technology class="case-container w1200" :data="technologys" @more="moreTech" />
   </div>
 
@@ -18,20 +18,20 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs } from 'vue'
-import Case from './components/project.vue'
+import Project from './components/project.vue'
 import Technology from './components/Technology.vue'
 import { useRouter } from 'vue-router'
-import { getCase, getTechnologys } from '@/api/services'
+import { getProject, getTechnologys } from '@/api/services'
 const router = useRouter()
 /** 数据 */
 const state = reactive<any>({
-  caseList: [],
+  projectList: [],
   technologys: []
 })
 // 案例
 const cases = () => {
-  getCase().then((res:any) => {
-    state.caseList = res.data.result.slice(0, 3)
+  getProject().then((res:any) => {
+    state.projectList = res.data.result.slice(0, 3)
   })
 }
 
@@ -56,7 +56,7 @@ const moreTech = () => {
   router.push('technology')
 }
 const {
-  caseList,
+  projectList,
   technologys
 } = toRefs(state)
 </script>

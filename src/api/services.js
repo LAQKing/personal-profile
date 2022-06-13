@@ -4,7 +4,7 @@ import $axios from './request'
 // export const login = (data) => $axios.post('/api/user/login', data)
 
 // 获取案例
-export const getCase = () => $axios.get('/json/getCaseList.json')
+export const getProject = () => $axios.get('/json/getProjectList.json')
 
 // 获取技术
 export const getTechnologys = () => $axios.get('/json/getTechnologys.json')

@@ -5,15 +5,15 @@
     </div>
     <div class="navBox">
       <div class="title">
-        <span class="title-item">技</span>
-        <span class="title-item">术</span>
+        <span class="title-item">搬</span>
+        <span class="title-item">砖</span>
       </div>
       <div class="menu">
         <div
           v-for="(item, index) in menuList"
           :key="index"
           class="menu-item"
-          :class="{ active: activeIndex === item.meta.index || routeID === item.meta.index }"
+          :class="{ active: activeIndex === item.meta.index,routeID }"
           @click="changeIndex(item.meta.index,item.path)"
         >
           {{ item.meta.menuName }}

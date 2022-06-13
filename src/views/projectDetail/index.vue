@@ -18,14 +18,20 @@
         </div>
       </div>
     </div>
-    <div v-if="detail.url" class="link" @click="openUrl">前往查看</div>
+    <div v-if="detail.qrCode" class="major-container">
+      <div class="major-item">
+        <div class="title">二维码:</div>
+        <a-image width="200" :src="getIcon(detail.qrCode)" class="code" />
+      </div>
+    </div>
+    <div v-if="detail.link" class="link" @click="openUrl">前往查看</div>
     <loading :dot="true" :title="'加载中'" :loading="load" />
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
-import { getCase } from '@/api/services'
+import { getProject } from '@/api/services'
 import loading from '@/components/loading.vue'
 
 /** ***************  数据声明  ***************/
@@ -35,23 +41,28 @@ const state = reactive<any>({
   detail: {}
 })
 
-const id = route.query.id
+const id = Number(route.query.id)
 // 请求数据
 const casesDetail = () => {
   state.load = true
-  getCase().then((res:any) => {
+  getProject().then((res:any) => {
     const info = res.data.result.filter((item: any) => {
       return item.id === id
     })
+    console.log(res.data.result)
+
     state.load = false
     state.detail = info[0]
   })
 }
 
+const getIcon = (icon: string) => {
+  return require(`@/assets/case/${icon}.png`)
+}
 /** ***************  自定义方法  ***************/
 const openUrl = () => {
-  if (state.detail.value.url) {
-    window.open(state.detail.value.url)
+  if (state.detail.link) {
+    window.open(state.detail.link)
   }
 }
 /** ***************  生命周期  ***************/
@@ -107,5 +118,8 @@ const { load, detail } = toRefs(state)
       }
     }
   }
+}
+.code{
+  margin-top: 15px;
 }
 </style>
