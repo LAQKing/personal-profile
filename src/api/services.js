@@ -7,7 +7,7 @@ import $axios from './request'
 export const getProject = () => $axios.get('/json/getProjectList.json')
 
 // 获取技术
-export const getTechnologys = () => $axios.get('/json/getTechnologys.json')
+export const getBlog = () => $axios.get('/json/getBlog.json')
 
 // 个人简介
 export const getUserInfo = () => $axios.get('/json/userInfo.json')

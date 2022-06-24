@@ -21,7 +21,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 import Project from './components/project.vue'
 import Technology from './components/Technology.vue'
 import { useRouter } from 'vue-router'
-import { getProject, getTechnologys } from '@/api/services'
+import { getProject, getBlog } from '@/api/services'
 const router = useRouter()
 /** 数据 */
 const state = reactive<any>({
@@ -37,7 +37,7 @@ const cases = () => {
 
 // 技术
 const techs = () => {
-  getTechnologys().then((res:any) => {
+  getBlog().then((res:any) => {
     state.technologys = res.data.result.slice(0, 3)
   })
 }

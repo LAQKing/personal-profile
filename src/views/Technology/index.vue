@@ -21,7 +21,7 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, defineProps, computed } from 'vue'
-import { getTechnologys } from '@/api/services'
+import { getBlog } from '@/api/services'
 import loading from '@/components/loading.vue'
 const props = defineProps({
   data: {
@@ -44,7 +44,7 @@ const state = reactive<any>({
 // 请求数据
 const techs = () => {
   state.load = true
-  getTechnologys().then((res:any) => {
+  getBlog().then((res:any) => {
     state.load = false
     state.technologys = res.data.result
   })

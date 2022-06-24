@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
-// keepAlive 需要缓存的页面
+// keepAlive:true 需要缓存的页面
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
