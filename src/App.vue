@@ -14,59 +14,46 @@
     <bottom-bar style="margin-top: 50px" @click="moreInfo" />
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { onMounted, reactive, watch, toRefs, computed } from '@vue/runtime-core'
 import TopNavBar from '@/components/TopNavBar.vue' // 菜单栏 menu
 import BottomBar from '@/components/bottom.vue' // 底部信息 bottom
 import breadcrumb from '@/components/breadcrumb.vue' // 面包屑 breadcrumb
 import { useRoute, useRouter } from 'vue-router'
 import store from '@/store'
-export default {
-  components: {
-    TopNavBar,
-    BottomBar,
-    breadcrumb
+
+const route = useRoute()
+const router = useRouter()
+const state = reactive<any>({
+  includeList: []
+})
+watch(
+  () => route,
+  (newVal, oldVal) => {
+    if (newVal.meta.keepAlive && state.includeList.indexOf(newVal.name) === -1) {
+      state.includeList.push(newVal.name)
+    }
+    setTimeout(() => {
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    }, 300)
   },
+  { deep: true }
+) // 开启深度监听
+// 菜单状态
+const menuOpen = computed(() => {
+  return store.state.menuOpen
+})
 
-  setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const state = reactive<any>({
-      includeList: []
-    })
-    watch(
-      () => route,
-      (newVal, oldVal) => {
-        if (newVal.meta.keepAlive && state.includeList.indexOf(newVal.name) === -1) {
-          state.includeList.push(newVal.name)
-        }
-        setTimeout(() => {
-          document.body.scrollTop = 0
-          document.documentElement.scrollTop = 0
-        }, 300)
-      },
-      { deep: true }
-    ) // 开启深度监听
-    // 菜单状态
-    const menuOpen = computed(() => {
-      return store.state.menuOpen
-    })
+onMounted(() => {})
 
-    onMounted(() => {})
-
-    const moreInfo = () => {
-      window.scrollTo(0, 0)
-      router.push('about')
-    }
-
-    return {
-      ...toRefs(state),
-      route,
-      moreInfo,
-      menuOpen
-    }
-  }
+const moreInfo = () => {
+  window.scrollTo(0, 0)
+  router.push('about')
 }
+
+const { includeList } = toRefs(state)
+
 </script>
 <style lang="scss">
 .app{
