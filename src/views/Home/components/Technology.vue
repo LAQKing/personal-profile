@@ -1,6 +1,6 @@
 <template>
   <div>
-    <top-tool title="技术" @more="more" />
+    <top-tool title="技术" class="w1200" @more="more" />
     <Technology :data="data" />
   </div>
 </template>

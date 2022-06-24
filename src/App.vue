@@ -1,5 +1,5 @@
 <template>
-  <div class="app" :class="menuOpen?'menuOpen':''">
+  <div class="page-content" :class="menuOpen?'menuOpen':''">
     <top-nav-bar />
     <breadcrumb />
     <div class="main">
@@ -11,7 +11,7 @@
         </transition>
       </router-view>
     </div>
-    <bottom-bar style="margin-top: 50px" @click="moreInfo" />
+    <bottom-bar class="bottom" @click="moreInfo" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -56,9 +56,10 @@ const { includeList } = toRefs(state)
 
 </script>
 <style lang="scss">
-.app{
+.page-content{
   padding-left: 150px;
   padding-top: 50px;
+  padding-bottom: 250px;
   transition: 0.3s;
   &.menuOpen{
     padding-left: 0;
@@ -92,8 +93,14 @@ const { includeList } = toRefs(state)
   opacity: 0;
   transform: translateX(30px);
 }
+.bottom{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
 @media screen and (max-width:768px) {
-.app{
+.page-content{
   padding-top: 0;
   padding-left: 0;
 }

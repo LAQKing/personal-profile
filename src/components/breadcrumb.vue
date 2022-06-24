@@ -64,6 +64,10 @@ const { crumbs, menuOpen } = toRefs(state)
 
 </script>
 <style lang="scss" scoped>
+.arco-breadcrumb{
+  display: flex;
+  align-items: center;
+}
 .arco-icon{
   font-size: 24px;
   width: 24px;

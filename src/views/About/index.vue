@@ -2,7 +2,7 @@
   <div class="about-container w1200">
     <!-- 个人简介 -->
     <div class="introduction-container">
-      <div class="left">{{ "个人\n简介" }}</div>
+      <div class="left">个人<br>简介</div>
       <div class="right">
         <span>4年开发经验 | 26岁 </span>
         <div class="contact">
@@ -133,7 +133,6 @@ const { dataList, majorList } = toRefs(state)
       img {
         width: 30px;
         height: 30px;
-        transform: translateY(25%);
         cursor: pointer;
       }
     }
@@ -267,7 +266,6 @@ const { dataList, majorList } = toRefs(state)
     }
   }
 }
-
 .job {
   display: flex;
   flex-direction: column;
@@ -304,6 +302,60 @@ const { dataList, majorList } = toRefs(state)
         font-weight: 500;
       }
     }
+  }
+}
+@media screen and (max-width:768px) {
+  .introduction-container{
+    margin: 10px 10px 40px;
+    border-radius: 10px;
+  }
+  .introduction-container .left{
+    padding: 0 15px;
+    font-size: 24px;
+    width: 90px;
+  }
+  .introduction-container .right{
+    font-size: 14px;
+  }
+  .introduction-container .right .contact{
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    a{
+      display: block;
+    }
+  }
+  .introduction-container .right .contact img{
+    width: 18px;
+    height: 18px;
+  }
+  .top-tool{
+    padding-left: 10px;
+  }
+  .major-container .major-item .title{
+    font-size: 18px;
+  }
+  .major-container .major-item .major{
+    font-size: 14px;
+  }
+  .tech-item .company{
+    padding: 0 10px;
+    font-size: 15px;
+  }
+  .project-container{
+    padding: 0 15px;
+    flex-wrap: wrap;
+  }
+  .project-container .case-item{
+    margin-right: 4%;
+    margin-bottom: 4%;
+    width: 48%;
+    &:nth-child(2n){
+      margin-right: 0;
+    }
+  }
+  .job-container{
+    margin-top: 30px;
   }
 }
 </style>

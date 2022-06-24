@@ -10,8 +10,8 @@
         <div>学海无涯苦作舟</div>
       </div>
     </div>
-    <Project class="case-container w1200" :data="projectList" @more="moreCase" />
-    <Technology class="case-container w1200" :data="technologys" @more="moreTech" />
+    <Project class="case-container " :data="projectList" @more="moreCase" />
+    <Technology class="case-container " :data="technologys" @more="moreTech" />
   </div>
 
 </template>
@@ -30,14 +30,14 @@ const state = reactive<any>({
 })
 // 案例
 const cases = () => {
-  getProject().then((res:any) => {
+  getProject().then((res: any) => {
     state.projectList = res.data.result.slice(0, 3)
   })
 }
 
 // 技术
 const techs = () => {
-  getBlog().then((res:any) => {
+  getBlog().then((res: any) => {
     state.technologys = res.data.result.slice(0, 3)
   })
 }
@@ -82,17 +82,22 @@ const {
   font-size: 30px;
   font-weight: bold;
   font-family: Georgia, "Times New Roman", Times, serif;
+
   div {
     margin-top: 30px;
+
     &:first-child {
       margin-top: 0;
     }
+
     &:nth-child(2) {
       margin-left: 70px;
     }
+
     &:nth-child(3) {
       margin-left: 140px;
     }
+
     &:last-child {
       margin-left: 210px;
     }
@@ -110,5 +115,59 @@ const {
 
 .case-container {
   padding-top: 50px;
+}
+
+@media screen and (max-width:1400px) {
+  .home_text {
+    left: 50px;
+    font-size: 24px;
+    div {
+
+      &:nth-child(2) {
+        margin-left: 50px;
+      }
+
+      &:nth-child(3) {
+        margin-left: 100px;
+      }
+
+      &:last-child {
+        margin-left: 150px;
+      }
+    }
+  }
+  .home_bg{
+    right: 50px;
+    max-width: 50%;
+  }
+}
+@media screen and (max-width:768px) {
+  .home{
+    border-bottom: 450px solid #39424f;
+    border-right: 450px solid #4dacfa;
+  }
+  .home_text {
+    left: 20px;
+    font-size: 20px;
+    top: 65%;
+    div {
+
+      &:nth-child(2) {
+        margin-left: 30px;
+      }
+
+      &:nth-child(3) {
+        margin-left: 60px;
+      }
+
+      &:last-child {
+        margin-left: 90px;
+      }
+    }
+  }
+  .home_bg{
+    right: 20px;
+    top: 20%;
+  }
 }
 </style>

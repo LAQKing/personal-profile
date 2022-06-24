@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopTool title="案例" @more="more" />
+    <TopTool title="案例" class="w1200" @more="more" />
     <case-box :data="data" />
   </div>
 </template>

@@ -10,8 +10,8 @@
       <div class="content">
         <div class="title">{{ item.title }}</div>
         <div class="desc">{{ item.desc }}</div>
+        <span class="date">{{ item.year + "-" + item.date }}</span>
       </div>
-      <span class="date">{{ item.year + "-" + item.date }}</span>
       <div class="more">
         <img src="@/assets/arrow_normal.png">
       </div>
@@ -91,11 +91,10 @@ const { technologys, load } = toRefs(state)
   }
 
   .date {
-    position: absolute;
-    bottom: 10px;
-    left: 240px;
     font-size: 13px;
     color: #919191;
+    margin-top: 10px;
+    display: block;
   }
 
   .content {
@@ -154,5 +153,25 @@ const { technologys, load } = toRefs(state)
       color: white;
     }
   }
+}
+@media screen and (max-width:768px) {
+  .tech-item{
+    padding: 10px;
+  }
+  .tech-item .content{
+    padding: 0 10px 5px;
+  }
+  .tech-item .icon{
+    width: 30%;
+    height: 100px;
+  }
+  .tech-item .content .title{
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  .tech-item .content .desc{
+    -webkit-line-clamp:2;
+  }
+
 }
 </style>

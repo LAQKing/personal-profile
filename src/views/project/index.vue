@@ -1,9 +1,13 @@
 <template>
   <div class="container w1200">
-    <div v-for="item in (homeCases.length?homeCases:cases)" :key="item.title" class="case-item" @click="showDetail(item)">
-      <div class="bg-icon" :style="'background-color:'+item.bgColor" />
+    <div
+      v-for="item in (homeCases.length ? homeCases : cases)"
+      :key="item.title"
+      class="case-item"
+    >
+      <div class="bg-icon" :style="'background-color:' + item.bgColor" />
       <img :src="getIcon(item.icon)" alt="" class="img">
-      <div class="info">
+      <div class="info" @click="showDetail(item)">
         <div class="txt">
           <div>{{ item.title }}</div>
           <div class="type">{{ item.type }}</div>
@@ -37,7 +41,7 @@ const state = reactive<any>({
 // 请求数据
 const getData = () => {
   state.load = true
-  getProject().then((res:any) => {
+  getProject().then((res: any) => {
     state.load = false
     state.cases = res.data.result
   })
@@ -73,6 +77,7 @@ const { cases, load } = toRefs(state)
   //   justify-content: space-between;
   align-items: center;
   padding-top: 30px;
+
   .case-item {
     width: 32%;
     height: 220px;
@@ -82,18 +87,22 @@ const { cases, load } = toRefs(state)
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.12);
-    &:nth-child(2){
+
+    &:nth-child(2) {
       background: #000;
     }
-    .img{
+
+    .img {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
     }
-    &:nth-child(3n){
+
+    &:nth-child(3n) {
       margin-right: 0;
     }
+
     .bg-icon {
       position: absolute;
       left: 0;
@@ -101,6 +110,7 @@ const { cases, load } = toRefs(state)
       top: 0;
       height: 100%;
     }
+
     .info {
       position: absolute;
       left: 0;
@@ -116,22 +126,26 @@ const { cases, load } = toRefs(state)
       justify-content: center;
       transition: 0.3s;
       align-items: center;
-      .txt{
+
+      .txt {
         width: 100%;
         text-align: center;
         color: white;
         font-size: 20px;
       }
-      .type{
+
+      .type {
         font-size: 14px;
         margin-top: 10px;
       }
+
       .arrow-container {
         width: 40px;
         height: 40px;
         border-radius: 40px;
         background: #4dacfa;
         margin: 0 auto;
+
         img {
           width: 20px;
           height: 20px;
@@ -140,15 +154,28 @@ const { cases, load } = toRefs(state)
       }
     }
   }
+
   .case-item:hover {
     cursor: pointer;
     box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.12);
-    .info{
+
+    .info {
       bottom: 0;
     }
+
     .arrow-container {
       transition: all 1s;
       opacity: 1;
+    }
+  }
+}
+
+@media screen and (max-width:768px) {
+  .container {
+    .case-item {
+      height: 200px;
+      width: 100%;
+      margin: 0 0 20px;
     }
   }
 }

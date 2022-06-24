@@ -60,6 +60,7 @@ const routeID = computed(() => {
 /** 选中菜单 **/
 const changeIndex = (index: number, path: string) => {
   state.activeIndex = index
+  state.isOpen = !state.isOpen
   router.push(path)
 }
 // 移动端打开菜单

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container w1200">
     <div class="case-title">{{ detail.title }}</div>
     <div class="major-container">
       <div class="major-item">
@@ -75,7 +75,7 @@ const { load, detail } = toRefs(state)
 </script>
 <style lang="scss" scoped>
 .container {
-  padding: 50px 300px 0 300px;
+  padding-top: 50px;
 
   .case-title {
     font-size: 30px;
@@ -121,5 +121,24 @@ const { load, detail } = toRefs(state)
 }
 .code{
   margin-top: 15px;
+}
+@media screen and (max-width:768px) {
+  .container{
+    padding-top: 60px;
+  }
+  .container .case-title{
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .major-container .major-item {
+    margin-bottom: 0px;
+  }
+  .major-container .major-item .title{
+    font-size: 18px;
+  }
+  .major-container .major-item .major{
+    font-size: 14px;
+  }
 }
 </style>

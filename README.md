@@ -20,7 +20,15 @@ npm run build
 [在线预览](https://laqtxy.gitee.io/personal-profile/#/)
 
 ### 图片预览
-![首页](https://gitee.com/laqtxy/applet-picture/raw/c1fd40b0fdd835f1f028ee4bb40728cfd29bfe30/laqGamePic/personal/1654079700352.jpg)
+PC首页
+![PC首页](https://gitee.com/laqtxy/applet-picture/raw/master/laqGamePic/personal/home.jpg)
 
-![个人简介](https://gitee.com/laqtxy/applet-picture/raw/c1fd40b0fdd835f1f028ee4bb40728cfd29bfe30/laqGamePic/personal/1654079700370.jpg)
+PC个人简历
+![PC个人简历](https://gitee.com/laqtxy/applet-picture/raw/master/laqGamePic/personal/info.jpg)
+
+移动端首页
+![移动端首页](https://gitee.com/laqtxy/applet-picture/raw/master/laqGamePic/personal/waphome.jpg)
+
+移动端个人简介
+![移动端个人简介](https://gitee.com/laqtxy/applet-picture/raw/master/laqGamePic/personal/wapinfo.jpg)
 
