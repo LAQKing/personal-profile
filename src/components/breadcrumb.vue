@@ -68,9 +68,15 @@ const { crumbs, menuOpen } = toRefs(state)
   display: flex;
   align-items: center;
 }
-.arco-icon-menu-fold{
-  font-size: 24px;
-  width: 24px;
+.arco-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    color: inherit;
+    font-style: normal;
+    vertical-align: -2px;
+    outline: none;
+    stroke: currentColor;
 }
 .crumbs{
   position: fixed;
