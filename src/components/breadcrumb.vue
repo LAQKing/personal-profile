@@ -98,6 +98,7 @@ const { crumbs, menuOpen } = toRefs(state)
 }
 ::v-deep .arco-breadcrumb-item{
   cursor: pointer;
+  padding: 0 4px;
   &:last-child{
     cursor: default;
   }
