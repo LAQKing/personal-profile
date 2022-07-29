@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 import home from '@/views/Home/index.vue'
 import project from '@/views/project/index.vue'
@@ -36,11 +36,16 @@ const routes: Array<RouteRecordRaw> = [
     name: 'About',
     component: about,
     meta: { menuName: '简介', showTop: true, index: 3 }
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  // history: createWebHistory('/personal/'),
+  history: createWebHashHistory('/personal/'),
   routes
 })
 
